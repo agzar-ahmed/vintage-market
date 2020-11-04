@@ -31,12 +31,13 @@
     margin-bottom: 5px;
 }    
 
-.login__container > form > input{
+.login__container > form > input,
+.login__container > form > select{
     width: 100%;
     margin-right: 0;
     background-color: #fff;
     height: 31px;
-    padding: 3px 7px;
+    /* padding: 3px 7px; */
     line-height: normal;
     border: 1px solid #a6a6a6;
     border-top-color: #949494;

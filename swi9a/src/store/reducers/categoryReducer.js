@@ -14,40 +14,23 @@ CATEGORY_ERROR
 
     const buildNewCategories = (parentId,categories, category) => {
         let myCategories = [];
-        // categories = [
-        //         {
-        //             name: "Electronics",
-        //             catId: "5f7b47444da5b61f28a07fa9",
-        //             childCategory: [
-        //                 {
-        //                     name: "Mobiles",
-        //                     catId: "5f92bb22df11761f9424b8d4",   
-        //                     parentId: "5f7b47444da5b61f28a07fa9",
-        //                     childCategory: [
-        //                         {
-        //                             name: "Xiaomi",
-        //                             catId: "5f9aaca2563be42c340c70ef",
-        //                             parentId: "5f92bb22df11761f9424b8d4",
-        //                             childCategory: [
-        //                                 {
-        //                                     name: "Air dot",
-        //                                     catId: "5f9ac0a415165b233c28b93d",
-        //                                     parentId: "5f9aaca2563be42c340c70ef",
-        //                                     childCategory: []
-        //                                 },
-        //                                 {
-        //                                     name: "readme pro",
-        //                                     catId: "5f9ac15215165b233c28b93e",
-        //                                     parentId: "5f9aaca2563be42c340c70ef",
-        //                                     childCategory: []
-        //                                 }                     
-        //                                         ]
-        //                         }
-        //                                 ]
-        //                                 }
-        //                             ]
-        //         }
-        //     ]
+       // console.log(category,'category')
+       // console.log(parentId,'parentId')
+        if(parentId==undefined){
+            //console.log(parentId,'parentId2')
+           let catlist= [
+               ...categories,
+               {
+                name: category.name,
+                catId: category._id,
+                // parentId: category.parentId,
+                childCategory: []
+            }
+            ]
+         console.log(catlist,'cat. list')
+            return catlist
+        }
+
 
         for(let cat of categories){
             // console.log(cat.catId,'cat id')
@@ -56,7 +39,7 @@ CATEGORY_ERROR
                 // console.log(parentId,'parent id')
                 myCategories.push({
                     ...cat,
-                    childCategory: cat.childCategory && cat.childCategory.length > 0 
+                    childCategory: cat.childCategory  
                     ? buildNewCategories(parentId,[...cat.childCategory,{
                         name: category.name,
                         catId: category._id,
@@ -69,13 +52,13 @@ CATEGORY_ERROR
             }else{
                 myCategories.push({
                     ...cat,
-                    childCategory: cat.childCategory && cat.childCategory.length > 0 
+                    childCategory: cat.childCategory 
                     ? buildNewCategories(parentId,[...cat.childCategory],category)
                     :[]
                 })
             }                                                                                                                                                                                                                                                                   
         }
-        console.log(myCategories)
+       // console.log(myCategories)
         return myCategories
     }
     
@@ -89,22 +72,22 @@ CATEGORY_ERROR
             case CATEGORY_LOADED:
                 return {
                     ...state,
-                    category: action.payload,
+                    category:action.payload,
                     CategoryisLoading: false
                 };
             case ADD_TO_CATEGORY:
                 const category = action.payload
                 // const state = action.state
-                console.log(category.parentId,'parent id')
-                console.log(action.state.categories.category,'state categories ')
-                console.log(action.payload,'payload')
+                // console.log(category.parentId,'parent id')
+                // console.log(action.state.categories.category,'state categories ')
+                // console.log(action.payload,'payload')
 
                  const updatedCategories = buildNewCategories(category.parentId,action.state.categories.category,action.payload)
-                console.log(updatedCategories,'cat reduce updated Categories ')
+                // console.log(updatedCategories,'cat reduce updated Categories ')
                 
                 return {
                     ...state,
-                    category:updatedCategories
+                    category: updatedCategories
                 };   
             case DELETE_FROM_CATEGORY :
                 return {

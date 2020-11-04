@@ -39,10 +39,10 @@ var upload = multer({ storage: storage })
 // @desc     Register users
 // @access   public
 
-router.post('/',auth,upload.array('productPicture',6),(req,res) =>{
-const {name, price, description, category, createdBy} = req.body;
+router.post('/',upload.array('productPictures',6),(req,res) =>{
+const {name, price, quantity, description, category, createdBy} = req.body;
 //simple validation
-    if(!name || !price || !description){
+    if(!name || !price || !quantity || !description){
         return res.status(400).json({msg :'Please enter all fields'});
     }
 //simple validation
@@ -51,6 +51,7 @@ const {name, price, description, category, createdBy} = req.body;
      if(product){
              return res.status(400).json({ msg: 'This Product already exists'})
      }
+     console.log({name, price, quantity, description, category})
 //Product pictures
         let productpictures = [];
         
@@ -59,16 +60,17 @@ const {name, price, description, category, createdBy} = req.body;
                 return { img: file.filename }
             })
         }
-
+        console.log(productpictures)
         const newProduct = new Product({
                 name,
                 price,
+                quantity,
                 description,
                 category,
-                productPicture: productpictures,
-                createdBy: req.user.id
+                productPictures: productpictures,
+                // createdBy: req.user.id
         });
-
+        // console.log(newProduct,"newprod")
       newProduct.save().then(product => res.json(product));
    
     // console.log(req.user.id)

@@ -9,7 +9,7 @@ import {addToCategory,clearErrors,loadCategory} from '../../store/actions/catego
 export class Addcategory extends Component {
     state = {
         category:'',
-        parentId:null,
+        parentId: undefined,
         categoryImage:null,
         msg: null
       };
@@ -24,7 +24,7 @@ export class Addcategory extends Component {
 
     onChange = e =>{
         this.setState({ [e.target.name]: e.target.value});
-};
+    };
 
     handelCategoryImage = e =>{
      this.setState(this.state.categoryImage = e.target.files[0]);
@@ -38,15 +38,19 @@ export class Addcategory extends Component {
         const data = new FormData()
         data.append('categoryImage', this.state.categoryImage)
         data.append('text', this.state.category)
-        data.append('parentId', this.state.parentId)     
+
+        // if(this.state.parentId =! undefined){
+            data.append('parentId', this.state.parentId)
+        // }
+             
         //Create user object
         const newCategory = {
             data
         };
         // console.log(data,'new category')
-            // data.forEach((value,key) => {
-            //     console.log(key+value)
-            //     });
+            data.forEach((value,key) => {
+                console.log(key+value,'key value pair')
+                });
      this.props.addToCategory(newCategory);    
     };
 
@@ -95,7 +99,7 @@ export class Addcategory extends Component {
                 
                 for(let element of category){
                 // console.log(element,"element")
-                if(element!= undefined){
+                if(element != undefined){
                     myCategories.push({value:element.catId, name: element.name});
                 }
                
@@ -110,7 +114,8 @@ export class Addcategory extends Component {
             return myCategories
          
        }
-
+       
+      
 
     render() {
         // console.log(this.props.category,"addcategory props") 
@@ -131,9 +136,10 @@ export class Addcategory extends Component {
                 <span className="Register__closebtn" onClick={this.props.clearErrors}>&times;</span> </div>) : null}
                 <form onSubmit={this.onSubmit}>
                     <h3>name</h3>
-                    <input type="text" name="category" onChange={this.onChange}/> 
+                    <input type="text" name="category" placeholder="Category Name" onChange={this.onChange}/> 
                     <h3>parent category</h3> 
-                    <select name="parentId" onChange={this.onChange}>
+                    <select name="parentId" placeholder="Select Category" onChange={this.onChange}>
+                    <option value="" hidden>Select something...</option>
                     {this.createCategoriesList(this.props.category)
                     .map(cat => <option key={cat.value} value={cat.value}>{cat.name}</option>)}
                     </select>
@@ -159,7 +165,7 @@ const mapStateToProps = state =>({
 
 export default connect(
     mapStateToProps,
-    {addToCategory,loadCategory,clearErrors,loadCategory}
+    {addToCategory,clearErrors,loadCategory}
     )(withRouter(Addcategory));
 
 //withRouter is height order component that super charge this component

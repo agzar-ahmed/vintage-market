@@ -12,7 +12,8 @@ const Categoryschema  = new Schema({
         type: String
     },
     parentId: {
-        type: String
+        type: String,
+        // default: undefined
     }
 },{ timestamps: true});
 

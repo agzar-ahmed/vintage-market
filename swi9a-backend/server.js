@@ -44,7 +44,7 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/category',require('./routes/api/category'));
 app.use('/api/product',require('./routes/api/product'));
 app.use('/api/cart',require('./routes/api/cart'));
-app.use('/api/test',require('./routes/api/test'))
+app.use('/api/initialdata',require('./routes/api/initialdata'))
 
 console.log()
 // app.get("/checkout",auth,(req,res)=> res.render('checkout'))

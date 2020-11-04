@@ -12,6 +12,7 @@ import Addproduct from "./layout/dashboard/Addproduct"
 import Addcategory from "./layout/dashboard/Addcategory"
 import {Provider} from "react-redux"
 import store from "./store/store"
+
 function App() {
   return (
     <Provider store={store}>

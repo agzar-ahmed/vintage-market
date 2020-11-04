@@ -12,6 +12,10 @@ const Productschema  = new Schema({
         type: Number,
         required: [true, 'Price is field is required'],
     },
+    quantity: {
+        type: Number,
+        required: [true, 'quantity is field is required'],
+    },
     description: {
         type: String,
         required: [true, 'Name is field is required'],
@@ -20,7 +24,7 @@ const Productschema  = new Schema({
     offer: {
         type: Number
     },
-    productPicture:[
+    productPictures:[
         {img:{type: String}}
     ],
     reviews: [

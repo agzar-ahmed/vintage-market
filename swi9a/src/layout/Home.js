@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 import soukImg from './soukImg.jpg'
 import "./Home.css"
 import Product from './Product'
 import prodImg from './prodImg.jpg'
+import {getInitialData} from '../store/actions/initialDataAction';
+import {connect} from 'react-redux'
 
-function Home() {
+class Home extends Component {
+        componentDidMount(){
+            this.props.getInitialData()
+        }
+   
+render() {
     return (
         <div className="home">
            
@@ -64,5 +71,9 @@ function Home() {
         </div>
     )
 }
- 
-export default Home
+}
+//export default Home
+export default connect(
+        null,
+        {getInitialData}
+        )(Home);

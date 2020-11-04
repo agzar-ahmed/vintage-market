@@ -44,7 +44,7 @@ export const addToCategory = ({data}) => (dispatch, getState) =>{
     // data.append('text',name)
     // //Request body
     // const body = {name}
-    console.log(data,'new category')
+    //  console.log(data,'new category')
             data.forEach((value,key) => {
                 console.log(key+value)
                 });
@@ -61,9 +61,9 @@ export const addToCategory = ({data}) => (dispatch, getState) =>{
     }))
    
     .catch(err =>{
-     console.log(err)
-    //    dispatch(returnErrors(err.response.data, err.response.status,'CATEGORY_ERROR'));
-    //    dispatch({ type: CATEGORY_ERROR })
+        // console.log(err)
+         dispatch(returnErrors(err.response.data, err.response.status,'CATEGORY_ERROR'));
+        //  dispatch({ type: CATEGORY_ERROR })
     })
 }
 export function deleteFromCategory(id){

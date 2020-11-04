@@ -21,10 +21,12 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 const createCategories =(categories, parentId = null) =>{
+  
     const categoryList=[];
     let category ;
     if(parentId == null){
-         category = categories.filter(cat => cat.parentId == undefined)      
+         category = categories.filter(cat => cat.parentId == undefined ||  cat.parentId == "undefined" ||  cat.parentId == "null") 
+        //  console.log(categories)     
     }else{
          category = categories.filter(cat => cat.parentId == parentId) 
     }
@@ -82,18 +84,18 @@ const createCategories =(categories, parentId = null) =>{
       const categoryObj = {
                             name,
                             }
-      // console.log(categoryObj,'cat Obj')
-        if(req.files){
+      // console.log( req.files,'files object ')
+        if(req.files.length > 0){
           categoryUrl = 'http://localhost:5000/public/'+ req.files[0].filename   
           categoryObj.categoryImage = categoryUrl
         } 
-        // console.log(categoryUrl,'cat url')
-        // console.log(req.files[0],'file')                     
-        if(req.body.parentId){
+        //  console.log(req.body.parentId,'cat url')
+        //  console.log(req.body.parentId.length,'parent id')                     
+         if(req.body.parentId != 'undefined'){//Normaly we should't have 'undefined' but formdata return parentId undefined as string 
               categoryObj.parentId = req.body.parentId
-        }
+         }
               const newCategory = new Category(categoryObj);
-              console.log(newCategory,'new cat')
+              // console.log(newCategory,'new cat')
       newCategory.save().then(category => res.json(category));
       })
       .catch(err => res.status(404).json({success:false}))       
