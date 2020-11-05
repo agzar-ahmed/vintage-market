@@ -29,10 +29,10 @@ export const loadCategory = () => (dispatch, getState) => {
          payload: res.data
         }))
      .catch(err => {
-        //  dispatch(returnErrors(err.response.data, err.response.status,'CATEGORY_ERROR'));
-         dispatch({
-             type: CATEGORY_ERROR
-         });
+         dispatch(returnErrors(err.response.data, err.response.status,'CATEGORY_ERROR'));
+        //  dispatch({
+        //      type: CATEGORY_ERROR
+        //  });
      });  
 };
 

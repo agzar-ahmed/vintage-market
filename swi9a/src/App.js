@@ -10,6 +10,7 @@ import Register from "./layout/Register"
 import Dashboard from "./layout/dashboard/Dashboard"
 import Addproduct from "./layout/dashboard/Addproduct"
 import Addcategory from "./layout/dashboard/Addcategory"
+import Modal from "./layout/Modal"
 import {Provider} from "react-redux"
 import store from "./store/store"
 
@@ -58,6 +59,12 @@ function App() {
                     <Header/>
                     <Home />          
                 </Route>
+
+                <Route exact path="/modal">
+                    <Header/>
+                    <Modal />          
+                </Route>
+
 
                 <Route path="*" component={()=>"404 not found"}> 
                                             

@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {register,clearErrors} from '../../store/actions/actions';
 import {loadCategory} from '../../store/actions/categoryAction';
 import {addProduct} from '../../store/actions/productAction';
-
+import Modal from '../Modal';
 
 export class Addproduct extends Component {
     state = {
@@ -18,7 +18,10 @@ export class Addproduct extends Component {
         quantity:'',
         description:'',
         category:'',
-        productPictures:[]
+        productPictures:[],
+        showModal: false,
+        clickedProduct: null
+
       };
      
       static propTypes = {
@@ -32,6 +35,15 @@ export class Addproduct extends Component {
     onChange = e =>{
         this.setState({ [e.target.name]: e.target.value });
     };
+
+    showModal = (product) => {
+        this.setState({ showModal: true, clickedProduct: product });
+        console.log(this.state.clickedProduct)
+    };
+
+    hideModal = () => {
+        this.setState({ showModal: false });
+  };
 
     createCategoriesList = (category,myCategories =[]) =>{
          
@@ -64,37 +76,7 @@ export class Addproduct extends Component {
                           ]
         })
    }
-   
-   renderTable =()=>{
-    return(
-    <table>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Description</th>
-                <th>Category</th>
-            </tr>
-            <tr>
-                <td>Sample text</td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>Sample text</td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-            </tr>
-    </table>
-    )
-   }
+  
 
     onSubmit = e => {
         e.preventDefault();
@@ -124,14 +106,16 @@ export class Addproduct extends Component {
         // const { isAuthenticated} = this.props;
         const { error, isAuthenticated} = this.props;
         if(!isAuthenticated){
-            // console.log(this.props,"props from is auth condit")
-            this.props.history.push('/addproduct')
-            this.props.loadCategory()
-        }         
+            console.log(this.props,"props from is auth condit")
+            this.props.history.push('/')
+        }
+        // else{
+        //     this.props.loadCategory()
+        // }      
       }
 
     componentDidUpdate(prevProps){
-        const { error } = this.props;
+        const { error, isAuthenticated } = this.props;
       if(error !== prevProps.error) {
             //check for login errors
             if(error.id == 'PRODUCT_ERROR') {
@@ -141,8 +125,47 @@ export class Addproduct extends Component {
                 this.setState({ msg: null });
             }
        }   
-       console.log(this.state) 
-    }  
+       if(!isAuthenticated){
+           console.log(this.props,"props from is auth condit")
+           this.props.history.push('/login')
+       }    
+    } 
+    
+    renderTable =(products)=>{
+        let index=0
+        return(
+        <table>
+        
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    {/* <th>Description</th> */}
+                    <th>Category</th>
+                </tr>
+
+                { 
+                products.length > 0 ?
+               (products.map( product =>
+               <tr onClick={()=>this.showModal(product)}>
+                    <td>{index+=1}</td>
+                    <td>{product.name}</td>
+                    <td>{product.price}</td>
+                    <td>{product.quantity}</td>
+                    {/* <td>{product.description}</td> */}
+                    <td>{product.category.name}</td>
+               </tr>
+               )
+               )
+               :null
+               } 
+                
+        </table>
+        )
+       
+    }
+
     render() {
         console.log(this.props)
         // setTimeout(()=> {this.props.history.push("/checkout")},2000)
@@ -182,7 +205,10 @@ export class Addproduct extends Component {
             </div>
         </div>
              <h1>Product List</h1>
-             {this.renderTable()}
+             {this.renderTable(this.props.products)}
+              <Modal showModal={this.state.showModal} 
+              hideModal={this.hideModal} 
+              product={this.state.clickedProduct}/>
             </div>
         )
     }
@@ -191,13 +217,14 @@ export class Addproduct extends Component {
 const mapStateToProps = state =>({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.error,
-    category: state.categories.category
+    category: state.initialData.initialData.categories,
+    products: state.initialData.initialData.products
 });
+
 
 export default connect(
     mapStateToProps,
     {register,clearErrors,loadCategory,addProduct}
     )(withRouter(Addproduct));
-
 //withRouter is height order component that super charge this component
 //whech make it easy to do programatic redirects with : this.props.history.push("/checkout")

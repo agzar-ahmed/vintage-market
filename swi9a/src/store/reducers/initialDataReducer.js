@@ -6,6 +6,10 @@ import {
     
     const initialState = {
         inialDataisLoading: false,
+        initialData:{
+            categories:"test",
+            products:"test"
+        }
     };
 
    

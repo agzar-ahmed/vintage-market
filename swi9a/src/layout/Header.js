@@ -47,12 +47,14 @@ export class Header extends Component {
                 {/* 3 Links */}
                    {/* 1st Link */}
                    {(isAuthenticated) ? 
-                   ( <Link to="/logout" className="header__link">
+                   (
+                   <Link to="/logout" className="header__link">
                       <div className="header__option">
-                   <span className="header__optionLineOne">hello {user.name}</span>
+                          <span className="header__optionLineOne">hello {user.name}</span>
                           <span className="header__optionLineTwo">Sign out</span>
                       </div>
-                    </Link>)
+                    </Link>
+                  )
                   :
                     (<Link to="/login" className="header__link">
                       <div className="header__option">
@@ -60,6 +62,18 @@ export class Header extends Component {
                           <span className="header__optionLineTwo">Sign in</span>
                       </div>
                     </Link>)
+                }
+
+                {(isAuthenticated) ? 
+                   (
+                  <Link to="/dashboard" className="header__link">
+                    <div className="header__option">
+                        <span className="header__optionLineTwo">Dashboard</span>
+                    </div>
+                  </Link>
+                  )
+                  :
+                  null
                 }
                 {/* <Link to="/login" className="header__link">
                   <div className="header__option">
