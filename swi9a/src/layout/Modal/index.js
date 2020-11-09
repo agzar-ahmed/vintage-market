@@ -13,7 +13,8 @@ export default class Mod extends Component {
       <div>
         <Modal showModal={this.props.showModal} 
         handleClose={this.props.hideModal} 
-        hideModal={this.props.hideModal}>
+        //hideModal={this.props.hideModal}
+        >
           <h1>Product:</h1>
          <div className="modal_children">
          {/* { let {name, price, category,} = this.props.product } */}

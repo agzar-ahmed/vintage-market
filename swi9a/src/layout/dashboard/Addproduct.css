@@ -4,6 +4,9 @@ table {
     border-spacing: 0;
     width: 100%;
     border: 1px solid #ddd;
+    max-width: 80%;
+    margin-left: 10%;
+    /* margin: 20px 0 50px; */
   }
   
   /* Style table headers and table data */

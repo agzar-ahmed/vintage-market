@@ -17,7 +17,12 @@ function Product(props) {
     return (
         <div className="product">
             <div className="product__info">
-                <p className="product__title"> {title} </p>
+               
+            </div>
+            <img src={image} alt="productImage"/>
+            <button onClick={() => addToBasket(product)}>Add to basket</button>
+
+            <p className="product__title"> {title} </p>
                 <p className="product__price"> 
                 <strong>{price}</strong>
                 <small> $ </small>
@@ -28,10 +33,6 @@ function Product(props) {
                     .fill().map(() => ( <StarIcon style={{ color: yellow[500] }}/>))
                 }
                 </p>
-            </div>
-           
-            <img src={image} alt="productImage"/>
-            <button onClick={() => addToBasket(product)}>Add to basket</button>
             
         </div>
     )

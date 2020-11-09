@@ -12,6 +12,7 @@ import {
         const initialState = {
             token: localStorage.getItem('token'),
             productisLoading: false,
+            product:null
         };
     
         
@@ -32,11 +33,11 @@ import {
                     return {
                         ...state,
                         product:[
-                               ...product,
+                            //    ...product,
                                action.payload
                         ]
                     };   
-                case DELETE_FROM_CATEGORY :
+                case DELETE_FROM_PRODUCT :
                     return {
                         ...state,
                     }; 

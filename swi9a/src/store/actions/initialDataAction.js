@@ -29,8 +29,8 @@ export const getInitialData = ( ) => (dispatch, getState)=>{
     )
    
     .catch(err =>{
-       console.log(err)
-        dispatch(returnErrors(err.response.data, err.response.status,' INITIALDATA_ERROR'));
+        console.log(err)
+        // dispatch(returnErrors(err.response.data, err.response.status,' INITIALDATA_ERROR'));
         // //  dispatch({ type: PRODUCT_ERROR })
     })
     

@@ -7,7 +7,7 @@ const shortid = require('shortid')
 //item model
 const Product = require('../../models/Product');
 const User = require('../../models/User');
-
+const Category = require('../../models/Category');
 //product picture storage:
 
 var storage = multer.diskStorage({
@@ -34,7 +34,31 @@ var upload = multer({ storage: storage })
             .sort({date : -1}) 
             .then(Product => res.json(Product))  
    })
-
+   //get selected category product
+   router.get('/:categoryName',(req,res) =>{
+    const {categoryName} = req.params
+     console.log(categoryName)
+    Category.findOne({name:categoryName})
+            // .select('_id')
+            .then((category) => {           
+                Product.find({category: category._id})
+                .sort({date:-1}) 
+                .then(products => res.json({
+                  products,
+                  productsByprice:{
+                    //we can do also betwwen two prices
+                    under5k: products.filter(product => product.price <= 5000),
+                    under4k: products.filter(product => product.price <= 4000),
+                    under3k: products.filter(product => product.price <= 3000),
+                    under2k: products.filter(product => product.price <= 2000),
+                    under1k: products.filter(product => product.price <= 1000),
+                    under500: products.filter(product => product.price <= 500),
+                    under50: products.filter(product => product.price <= 50)
+                  }
+                }))              
+            })
+            .catch(error => res.status(400).json({error}))          
+   })
 // @route    GET api/Product
 // @desc     Register users
 // @access   public
